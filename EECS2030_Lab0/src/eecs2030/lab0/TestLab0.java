@@ -366,7 +366,7 @@ public class TestLab0 {
 
 	@Test
 	public void test23_alternatingCaps() {
-		for (int length = 1; length < 1000; length++) {
+		for (int length = 1; length < 100; length++) {
 			for (int i = 0; i < 10; i++) {
 				Pair testCase = TestLab0.randomString(length);
 				String error = String.format("alternatingCaps(\"%s\") failed", testCase.in);

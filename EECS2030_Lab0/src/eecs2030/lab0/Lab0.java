@@ -362,16 +362,27 @@ public class Lab0 {
 	 * @return the string formed by alternating the case of the characters in s
 	 */
 	public static String alternatingCaps(String s) {
-		
-		if(s.length() == 1) {
-			return s.toLowerCase();
+		String str = "";
+		s = s.toLowerCase();
+		String[] test = new String[s.length()];
+
+		if (s.length() == 1) {
+			return s;
+		} else if (s.length() > 1) {
+			for (int i = 0; i < s.length(); i++) {
+				test[i] = s.valueOf(s.charAt(i));
+			}
+
+			for (int i = 1; i < s.length(); i += 2) {
+				test[i] = test[i].toUpperCase();
+			}
+
+			for (int i = 0; i < s.length(); i++) {
+				str = str + test[i];
+			}
+
 		}
-		else if(s.length() == 2) {
-			return s.toLowerCase();
-		}
-		else {
-			return s.toUpperCase();
-		}
+		return str;
 	}
 
 }
