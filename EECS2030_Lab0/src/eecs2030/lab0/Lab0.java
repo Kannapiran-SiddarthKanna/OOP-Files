@@ -382,6 +382,7 @@ public class Lab0 {
 			}
 
 		}
+
 		return str;
 	}
 
