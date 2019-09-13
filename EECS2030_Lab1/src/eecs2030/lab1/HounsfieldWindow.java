@@ -97,7 +97,7 @@ public class HounsfieldWindow {
 		} else if (h.value > hi) {
 			return 1;
 		} else {
-			return (h.value - lo) / width;
+			return (h.value - lo) / width;			
 		}
 
 	}
