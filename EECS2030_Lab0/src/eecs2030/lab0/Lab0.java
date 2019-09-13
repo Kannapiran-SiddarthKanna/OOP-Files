@@ -370,7 +370,7 @@ public class Lab0 {
 			return s;
 		} else if (s.length() > 1) {
 			for (int i = 0; i < s.length(); i++) {
-				test[i] = s.valueOf(s.charAt(i));
+				test[i] = String.valueOf(s.charAt(i));
 			}
 
 			for (int i = 1; i < s.length(); i += 2) {
