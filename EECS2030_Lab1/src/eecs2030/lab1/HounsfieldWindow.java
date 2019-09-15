@@ -55,8 +55,17 @@ public class HounsfieldWindow {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	private static void checkValues(int level, int width) {
+		if ((level < -1024) || (level > 3071)) {
+			throw new IllegalArgumentException();
+		} else if(width < 1) {
+			throw new IllegalArgumentException();
+		}
+	}
 
 	public HounsfieldWindow(int level, int width) {
+		checkValues(level, width);
 		this.level = level;
 		this.width = width;
 	}

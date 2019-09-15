@@ -27,6 +27,7 @@ public class Hounsfield {
 	 * The integer value of this Hounsfield unit
 	 */
 	public int value;
+	public int oldValue;
 
 	/**
 	 * The minimum Hounsfield unit reported by medical CT scanners
@@ -136,8 +137,9 @@ public class Hounsfield {
 	public int set(int value) {
 		// Call checkValue on the first line to perform input validation
 		checkValue(value);
-		this.value = value;		
-		return this.value;
+		this.oldValue = this.value;
+		this.value = value;
+		return this.oldValue;
 	}
 
 	/**
