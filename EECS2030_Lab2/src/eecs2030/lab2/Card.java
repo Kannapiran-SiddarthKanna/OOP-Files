@@ -68,13 +68,48 @@ public class Card implements Comparable<Card> {
 	
 	@Override
 	public int compareTo(Card other) {
-	
+		
+		if(this.rank.compareTo(other.rank) < 0 ) {
+			return -1;
+		}
+		if(this.rank.compareTo(other.rank) > 0) {
+			return 1;
+		}
+		if(this.rank.compareTo(other.rank) == 0) {
+			if(this.suit.compareTo(other.suit) < 0 ) {
+				return -1;
+			}
+			if(this.suit.compareTo(other.suit) > 0) {
+				return 1;
+			}
+			if(this.suit.compareTo(other.suit) == 0 ) {
+				return 0;
+			}
+		}
+		return 0;
 	}
 	
 	
 	@Override
 	public boolean equals(Object obj) {
-	
+		if(this == obj) {
+			return true;
+		}
+		if(obj == null) {
+			return false;
+		}
+		if(obj.getClass() != this.getClass()) {
+			return false;
+		}
+		
+		Card other = (Card) obj;
+		if(this.rank != other.rank) {
+			return false;
+		}
+		if(this.suit != other.suit) {
+			return false;
+		}
+		return true;
 	}
 	
 }

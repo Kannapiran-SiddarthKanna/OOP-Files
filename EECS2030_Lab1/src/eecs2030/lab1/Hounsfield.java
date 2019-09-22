@@ -27,6 +27,10 @@ public class Hounsfield {
 	 * The integer value of this Hounsfield unit
 	 */
 	public int value;
+	
+	/*
+	 * The old integer value of this Hounsfield unit
+	 */
 	public int oldValue;
 
 	/**

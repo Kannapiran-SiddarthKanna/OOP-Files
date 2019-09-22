@@ -33,6 +33,8 @@ public class Die implements Comparable<Die> {
 	 */
 	private int value;
 	
+	private int numFaces = 1;;
+	
 	/**
 	 * The number of faces on a die.
 	 */
@@ -45,7 +47,12 @@ public class Die implements Comparable<Die> {
 	 */
 	
 	public Die() {
-		
+		this.faces = new int[6];
+		for(int i = 0; i < 6; i++) {
+			faces[i] = numFaces;
+			numFaces++;
+		}
+		this.value = 1;
 	}
 	
 
@@ -104,7 +111,7 @@ public class Die implements Comparable<Die> {
 	
 	@Override
 	public int compareTo(Die other) {
-		
+		return this.compareTo(other);
 	}
 	
 
@@ -112,7 +119,7 @@ public class Die implements Comparable<Die> {
 	public boolean equals(Object obj) {
 		// The method Arrays.equals may be useful for helping
 		// to implement this method.
-		
+		return true;
 	}
 	
 
