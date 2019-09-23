@@ -10,6 +10,7 @@ import java.util.Objects;
 
 
 public class Card implements Comparable<Card> {
+
 	/**
 	 * The rank of this card. 
 	 */
