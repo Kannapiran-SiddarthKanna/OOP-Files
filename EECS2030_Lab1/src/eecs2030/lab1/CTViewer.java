@@ -74,7 +74,6 @@ public class CTViewer extends JFrame implements ActionListener, WindowListener {
 					this.value = this.parseValue(tf);
 					tf.setText("" + this.value);
 				} catch (ParseException x) {
-
 				}
 			}
 			return result;
