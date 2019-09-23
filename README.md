@@ -1,2 +1,2 @@
-# EECS2030
+# EECS-2030
 EECS2030 Course Lab Work
