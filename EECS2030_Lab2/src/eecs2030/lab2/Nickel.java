@@ -91,14 +91,6 @@ public class Nickel implements Comparable<Nickel> {
 		if (getClass() != obj.getClass()) {
 			return false;
 			}
-		
-		Nickel other = (Nickel) obj;
-		if (CENTS != other.CENTS) {
-			return false;
-			}
-		if (this.year != other.year) {
-			return false;
-			}
 		return true;
 	}
 }
