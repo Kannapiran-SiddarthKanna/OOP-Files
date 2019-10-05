@@ -69,7 +69,7 @@ public class DrawMandelbrot {
 			size = Double.parseDouble(args[2]);
 			max = Integer.parseInt(args[3]);
 		}
-		final int N = 256; // create N-by-N image
+		final int N = 512; // create N-by-N image
 
 		List<Color> colorMap = makeColorMap();
 

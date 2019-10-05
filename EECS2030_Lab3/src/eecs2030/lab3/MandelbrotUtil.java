@@ -36,6 +36,14 @@ public class MandelbrotUtil {
 		// of z is still less than or equal to 2 you should
 		// return max.
 		
+		for(int i = 0; i < max; i ++) {
+			z = z.multiply(z).add(c);
+			
+			if(z.mag() > 2) {
+				return i+1;
+			}
+		}
+		
 		return max;
 	}
 }
