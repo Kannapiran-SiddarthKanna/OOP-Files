@@ -10,15 +10,17 @@ import java.util.List;
  * 
  */
 public final class Complex {
-
 	
+	private final double real;
+	private final double imag;	
 	
 	/**
 	 * Initializes this complex number to <code>0 + 0i</code>.
 	 * 
 	 */
 	public Complex() {
-		
+		real = 0.0;
+		imag = 0.0;
 	}
 
 	/**
@@ -29,7 +31,8 @@ public final class Complex {
 	 *            the complex number to copy.
 	 */
 	public Complex(Complex other) {
-		
+		this.real = other.real;
+		this.imag = other.imag;
 	}
 
 	/**
@@ -42,8 +45,12 @@ public final class Complex {
 	 *            the imaginary part of the complex number.
 	 */
 	public Complex(double re, double im) {
-		
+		this.real = re;
+		this.imag = im;
 	}
+	
+	public static final Complex ONE = new Complex(1.0, 0.0);
+	public static final Complex I = new Complex(0.0, 1.0);
 
 	/**
 	 * A static factory method that returns a new complex number whose real part
@@ -51,12 +58,10 @@ public final class Complex {
 	 * 
 	 * @param re
 	 *            the desired real part of the complex number
-	 * @return a new complex number whose real part is equal to re and whose
-	 *         imaginary part is equal to 0.0
 	 */
 	public static Complex real(double re) {
-		
-		return null;
+		Complex newReal = new Complex(re, 0.0);
+		return newReal;			
 	}
 
 	/**
@@ -69,8 +74,8 @@ public final class Complex {
 	 *         imaginary part is equal to im
 	 */
 	public static Complex imag(double im) {
-		
-		return null;
+		Complex newImag = new Complex(0.0, im);
+		return newImag;
 	}
 
 	/**
@@ -80,7 +85,7 @@ public final class Complex {
 	 */
 	public double re() {
 		
-		return 0.0;
+		return Complex.this.real;
 	}
 
 	/**
@@ -90,7 +95,7 @@ public final class Complex {
 	 */
 	public double im() {
 		
-		return 0.0;
+		return Complex.this.imag;
 	}
 
 	/**
@@ -103,9 +108,11 @@ public final class Complex {
 	 * @return a new Complex number equal to the sum of this complex number and
 	 *         c.
 	 */
-	public Complex add(Complex c) {
-		
-		return null;
+	public Complex add(Complex c) {		
+		double left = this.real + c.real;
+		double right = this.imag + c.imag;
+		Complex test = new Complex(left, right);		
+		return test;
 	}
 
 	/**
@@ -124,9 +131,11 @@ public final class Complex {
 	 * @return a new Complex number equal to this complex number multiplied by
 	 *         c.
 	 */
-	public Complex multiply(Complex c) {
-		
-		return null;
+	public Complex multiply(Complex c) {		
+		double newReal = (this.real * c.real) - (this.imag * c.imag);
+		double newImag = (this.imag * c.real) + (this.real * c.imag);				
+		Complex newNum = new Complex(newReal, newImag);
+		return newNum;
 	}
 
 	/**
@@ -135,8 +144,8 @@ public final class Complex {
 	 * @return the magnitude of this complex number.
 	 */
 	public double mag() {
-		
-		return 0.0;
+		double mag = Math.hypot(this.real, this.imag);
+		return mag;
 	}
 
 	/**
