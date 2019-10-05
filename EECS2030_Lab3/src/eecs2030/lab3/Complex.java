@@ -2,6 +2,7 @@ package eecs2030.lab3;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class that represents immutable complex numbers.
@@ -174,7 +175,12 @@ public final class Complex {
 	@Override
 	public int hashCode() {
 		
-		return 0;
+		double realPart = this.real * 9999;
+		double imagPart = this.imag * 99;
+		double hashPart = realPart + imagPart;
+		int intHash = (int) hashPart;
+		
+		return intHash;
 	}
 
 	/**
@@ -190,7 +196,19 @@ public final class Complex {
 	@Override
 	public boolean equals(Object obj) {
 		
-		return true;
+		if(obj == null) {
+			return false;
+		}
+		if(obj.getClass() != this.getClass()) {
+			return false;
+		}
+		
+		Complex equalTest = (Complex) obj; // Make obj a Complex object
+		
+		boolean realTrue = (this.real == equalTest.real);
+		boolean imagTrue = (this.imag == equalTest.imag); 
+		
+		return (realTrue && imagTrue);
 	}
 
 	/**
@@ -215,6 +233,15 @@ public final class Complex {
 	@Override
 	public String toString() {
 		
+		if(this.imag < 0) {
+			return this.real + " - " + (this.imag * -1) + "i"; 
+		}
+		if(this.imag == 0) {
+			return "0.0 + 0.0i";
+		}
+		if(this.imag > 0) {
+			return this.real + " + " + (this.imag) + "i"; 
+		}
 		return "";
 	}
 
@@ -238,7 +265,6 @@ public final class Complex {
 	 *       real and imaginary parts of the complex number
 	 */
 	public static Complex valueOf(String s) {
-		Complex result = null;
 		String t = s.trim();
 		List<String> parts = Arrays.asList(t.split("\\s+"));
 		
@@ -271,9 +297,43 @@ public final class Complex {
 		// -once you account for the sign, you can return the correct
 		//  complex number
 		
+		int listSize = parts.size();
+		if(listSize != 3) {
+			throw new IllegalArgumentException();
+		}
 		
+		boolean checkSign = (parts.get(1).contains("+") || (parts.get(1).contains("-")));
+		boolean containsI = (parts.get(2).contains("i"));
+				
+		if(!checkSign) {
+			throw new IllegalArgumentException();
+		}
+		if(!containsI) {
+			throw new IllegalArgumentException();
+		}
 		
-		return result;
+		double stringReal = Double.valueOf(parts.get(0)); // Real value
+		String stringMiddle = parts.get(1); // + or - sign
+		
+		int sign = 0;
+		if(stringMiddle.equals("+")) {
+			sign = 1;
+		}
+		if(stringMiddle.equals("-")) {
+			sign = -1;
+		}
+		// Sign is 1 if +, and -1 if -		
+
+		
+		String stringEnd = parts.get(2);
+		stringEnd = stringEnd.replace("i", ""); // Replaces 0.0i with 0.0
+		
+		double stringImag = Double.valueOf(stringEnd); // Changes string to a double
+		stringImag *= sign;
+		
+		Complex answer = new Complex(stringReal, stringImag); 
+		
+		return answer;
 	}
 
 
