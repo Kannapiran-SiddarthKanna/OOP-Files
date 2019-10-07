@@ -42,7 +42,7 @@ public class MandelbrotUtil {
 				return i + 1;
 			}
 		}
-
+		
 		return max;
-	}
+	}	
 }
