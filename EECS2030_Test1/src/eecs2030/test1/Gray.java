@@ -6,6 +6,7 @@ public final class Gray {
 		
 		final double grayDouble;
 		final int grayInt;
+		int counter = 0;
 		
 		final double MIN_DOUBLE_VALUE = 0.0;
 		final double MAX_DOUBLE_VALUE = 1.0;
@@ -14,27 +15,30 @@ public final class Gray {
 		final static double MAX_INT_VALUE = 255;
 		
 		public Gray(double g){
-			if(!(g >= 0.0 && g <= 1.0)) {
-				throw new IllegalArgumentException("value must be between 0 and 1");
+			if(g < 0.0 || g > 1.0) {
+				throw new IllegalArgumentException("double1 value must be between 0 and 1");
 			}			
 			this.grayDouble = g;
 			this.grayInt =  (int) Math.round(g * 255.0);
+			this.counter = 0;
 			
 		}		
 		
 
 		public Gray(int g) {
 			if(!(g >= 0 && g <= 255)) {
-				throw new IllegalArgumentException("value must be between 0 and 255");
+				throw new IllegalArgumentException("int1 value must be between 0 and 255");
 			}
 			
 			this.grayDouble = (double) (g / 255.0);
 			this.grayInt = g;
+			this.counter = 1;
 		}
 		
 		public Gray(Gray other) {
 			this.grayDouble = other.grayDouble;
 			this.grayInt = other.grayInt;
+			this.counter = 2;
 		}
 		
 		public int asInt() {			
@@ -47,7 +51,7 @@ public final class Gray {
 		
 		public static double toDouble(int value) {
 			if(!(value >= 0 && value <= 255)) {
-				throw new IllegalArgumentException("value must be between 0 and 255");
+				throw new IllegalArgumentException("int value must be between 0 and 255");
 			}
 			
 			double intToDouble = (double) (value / 255.0);			
@@ -57,7 +61,7 @@ public final class Gray {
 		public static int toInt(double value) {
 			
 			if(!(value >= 0.0 && value <= 1.0)) {
-				throw new IllegalArgumentException("value must be between 0 and 1");
+				throw new IllegalArgumentException("double value must be between 0 and 1");
 			}			
 			
 			int doubleToInt = (int) Math.round(value * 255.0);
@@ -65,18 +69,21 @@ public final class Gray {
 		}
 		
 		public static Gray fromRGB(Color c) {
-			
-			double red = (double) c.getRed();
-			double green = (double) c.getGreen();
-			double blue = (double) c.getBlue();			
-			double fromRGB = (0.299 * red) + (0.587 * green) + (0.114 * blue);
-			
-			Gray newGray = new Gray(fromRGB);
-			
-			return newGray;
-		}
+	        double red = (double) c.getRed() / Gray.MAX_INT_VALUE;
+	        double green = (double) c.getGreen() / Gray.MAX_INT_VALUE;
+	        double blue = (double) c.getBlue() / Gray.MAX_INT_VALUE;
+	        double gray = 0.299 * red + 0.587 * green + 0.114 * blue;
+	        return new Gray(gray);
+	    }
 		
 		public String toString() {
+			
+			if(counter == 0) {
+				return "" + this.grayDouble;
+			}
+			if(counter == 1) {
+				return "" + this.grayInt;
+			}
 			
 			String toString = "" + this.grayInt;
 			
