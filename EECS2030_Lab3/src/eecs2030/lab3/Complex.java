@@ -22,6 +22,7 @@ public final class Complex {
 	public Complex() {
 		real = 0.0;
 		imag = 0.0;
+		
 	}
 
 	/**
