@@ -1,6 +1,7 @@
 package eecs2030.lab4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,12 @@ import java.util.Map;
 public class LZWDictionary {
 
 
+	public Map<String, Integer> map;
+	public List<String> list;
+
+
+
+
 	// FIELDS
 	// map  (for ease of checking existence of entries)
 	// list (ease of recall of an entry)
@@ -69,13 +76,46 @@ public class LZWDictionary {
 		
 		// NOTE: Complete the accessors getMap() and getList() first before running
 		// your tester on this ctor
-
+		if(characters.length() < 1) {
+			throw new IllegalArgumentException("String is empty");
+		}		
 		
+		char[] cArray = characters.toCharArray();
+		int size = cArray.length;
+		String[] sArray = new String[size];
+		for(int i = 0; i < size; i++) {
+			sArray[i] = Character.toString(cArray[i]);
+		}		
 		
+		Map<String, Integer> map = new LinkedHashMap<String, Integer>();
 		
+		int j = 0;
+		for(String keys : sArray) {
+			if(map.containsKey(keys) == false) {
+				map.put(keys, j);
+				j++;
+			}			
+		}		
+		// Unique single character string done ^^ 
 		
+		// Other combinations are to be added
+		int k = 0;	
+		String W = sArray[k];
+		while(k < sArray.length - 1) {			
+			String C = sArray[k + 1];
+			String WC = W + C;
+			if(map.containsKey(WC) == true) {
+				W = W + C;
+			}
+			else {
+				map.put(WC, j);
+				W = C;
+				j++; 
+				k++;
+			}
+		}
 		
-		
+		List<String> list = new ArrayList<String>(map.keySet());
 	}
 
 
@@ -86,11 +126,9 @@ public class LZWDictionary {
 	 * 
 	 * @return a reference to a map of entry-index pairs in the dictionary
 	 */
-	public Map<String, Integer> getMap() {
+	public Map<String, Integer> getMap() {	
 		
-		
-		
-
+		return this.map;
 	}
 	
 	/**
@@ -100,11 +138,9 @@ public class LZWDictionary {
 	 * 
 	 * @return a reference to a list of entries in the dictionary
 	 */
-	public List<String> getList() {
-
-	
-
+	public List<String> getList() {		
 		
+		return this.list;		
 	}
 
 
@@ -118,13 +154,11 @@ public class LZWDictionary {
 	 * a value of -1 if the entry is not found
 	 * 
 	 */
-	public int indexOf(String s) {
-		
-
-		
-		
-		
-		
+	public int indexOf(String s) {		
+		if(map.containsKey(s)) {
+			return map.get(s);
+		}
+		return -1;
 	}
 
 
@@ -143,7 +177,6 @@ public class LZWDictionary {
 	 * 
 	 */
 	public void reset() {
-
 		
 		
 		
@@ -171,13 +204,12 @@ public class LZWDictionary {
 	 * 
 	 */
 	public String get(int index) {
-		
-
-		
-		
-		
-		
-		
+		if(index < 0 || index > map.size()) {
+			throw new IndexOutOfBoundsException("The provided index is not within valid range");
+		}
+		String key = "";		
+				
+		return key;
 	}
 
 	
@@ -192,11 +224,11 @@ public class LZWDictionary {
 	 */
 	public boolean hasIndex(int index) {
 		
-
+		if(index >= 0 && index <= map.size()) {
+			return true;
+		}
 		
-		
-		
-		
+		return false;
 	}
 
 	
@@ -212,12 +244,11 @@ public class LZWDictionary {
 	 */
 	public int add(String entry) {
 		
-
+		if(map.containsKey(entry) == false) {
+			map.put(entry, map.size());
+		}		
 		
-		
-		
-		
-		
+		return map.get(entry);
 	}
 
 
@@ -231,11 +262,10 @@ public class LZWDictionary {
 	 *         false otherwise
 	 */
 	public boolean contains(String s) {
-		
-
-		
-		
-		
+		if(map.containsKey(s)) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -253,10 +283,13 @@ public class LZWDictionary {
 	 */
 	public int size() {
 		
+		int mapSize = map.size();
 
+		if(mapSize > 0) {
+			return mapSize;
+		}
 		
-		
-		
+		return -1;
 	}
 
 
@@ -272,11 +305,9 @@ public class LZWDictionary {
 	@Override
 	public String toString() {
 		
-
 		
 		
-		
-		
+		return "";
 	}
 	
 	
