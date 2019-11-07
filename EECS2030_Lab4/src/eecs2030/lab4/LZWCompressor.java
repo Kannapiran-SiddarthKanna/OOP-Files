@@ -28,6 +28,10 @@ import java.util.List;
  */
 public class LZWCompressor {
 
+	String inputString = "";
+	LZWDictionary dict;
+	double encodeSize = 0.0;
+	
 	// FIELDS
 	// input sequence to be encoded
 	// dictionary to use when encoding/decoding
@@ -52,12 +56,12 @@ public class LZWCompressor {
 	 * 
 	 */
 	public LZWCompressor(String input) {
-
+		inputString = input;
+		if(inputString.length() == 0) {
+			throw new IllegalArgumentException("The input string is empty");
+		}
 		
-		
-		
-
-
+		dict = new LZWDictionary(inputString);
 	}
 
 
@@ -68,9 +72,7 @@ public class LZWCompressor {
 	 * 
 	 */
 	public String getInput() {
-
-
-
+		return inputString;
 	}
 
 
@@ -80,9 +82,7 @@ public class LZWCompressor {
 	 * @return a reference to the LZWDictionary used by this LZWCompressor
 	 */
 	public LZWDictionary getDictionary() {
-
-
-		
+		return dict;	
 	}
 
 
@@ -99,15 +99,54 @@ public class LZWCompressor {
 	 * 
 	 */
 	public List<Integer> encode() {
-
-
 		
+		dict.reset();
 		
+		/*
+		 *  Unique characters are already there in the dictionary,
+		 *  Other combinations need to be added to the map, and output the map as a list.
+		 */
 		
+		char[] cArray = inputString.toCharArray();
+		String[] sArray = new String[cArray.length];
+		for(int i = 0; i < cArray.length; i++) {
+			sArray[i] = Character.toString(cArray[i]);
+		}
 		
+		/*
+		 * The inputString is in a unique single character string array, 
+		 * do the encoding now, and update the dictionary while encoding. 
+		 */
 		
+		/*
+		 * Keep adding the longest pattern that was used for the encoding before adding the sequence 
+		 * to the dictionary.
+		 */
+		List<Integer> finalList = new ArrayList<Integer>();
+	//	finalList.add(0);
 		
-
+		int k = 0;	
+		int j = 0;
+		String W = sArray[k];
+		while(k < sArray.length - 1) {			
+			String C = sArray[k + 1];
+			String WC = W + C;
+			if(dict.map.containsKey(WC) == true) {
+				W = W + C;
+				k++;
+			}
+			else {
+				finalList.add(dict.map.get(W));
+				dict.map.put(WC, (dict.map.size()));
+				W = C; 
+				k++;
+				j++;
+			}
+		}
+		finalList.add(dict.map.get(W));
+		encodeSize = finalList.size();		
+		
+		return finalList;		
 	}
 
 
@@ -131,14 +170,51 @@ public class LZWCompressor {
 	 * @throws an IllegalArgumentException if encoded is an empty list
 	 * 
 	 */
-	public String decode(List<Integer> encoded) {
-
-
+	public String decode(List<Integer> encoded) {		
+		
+		if(encoded.isEmpty()) {
+			throw new IllegalArgumentException("Encoded is an empty list");
+		}
+		
+		dict.reset();
+		dict.getMap();
+		
+		String finalAnswer = "";
+		String S;
+		char C;
+		String ENTRY;
+		
+		int prev = encoded.get(0);
+		finalAnswer += dict.get(prev);
+		
+		int k = 0;
+		int j = 1;
+		while(k < encoded.size() - 2){
+			int next = encoded.get(j);
+			
+			if(dict.map.containsValue(next)) {
+				S = dict.get(next);
+				// k++;
+				j++;
+			}
+			else {
+				 S = dict.get(prev);
+				 C = S.charAt(0);
+				 S = S + C;
+				 k++;
+				// j++;
+			}
+			
+			finalAnswer += S;
+			ENTRY = dict.get(prev) + S.charAt(0);
+			dict.map.put(ENTRY, dict.map.size());
+			dict.list.add(ENTRY);
+			prev = next;
+		}
 		
 		
 		
-		
-
+		return finalAnswer;
 	}
 
 
@@ -160,12 +236,11 @@ public class LZWCompressor {
 	 * 
 	 */
 	public double compressionRatio() {
-
 		
-
+		double inputLength = inputString.length();
+		double encodeLength = encodeSize;		
 		
-		
-
+		return inputLength / encodeLength;
 	}
 
 
