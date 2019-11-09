@@ -1,3 +1,7 @@
+package eecs2030.lab5;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -29,8 +33,28 @@ public class RecursiveMethods {
 	public int[] arithmeticArray(int start, int diff, int n) {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticArrayHelper.
-		 */
-		return null;
+		 */	
+		
+		// If n = 0, return empty {];
+		if(n == 0) {
+			return new int[0];
+		}
+		// If n = 1, return an array with first element as start.
+		if(n == 1) {
+			int[] seq = {start};
+			return seq;
+		}
+		if(n == 2) {
+			int[] seq = {start, start + diff};
+			return seq;
+		}
+		else {
+			int[] seq = new int[n];
+			seq[0] = start;
+			seq[1] = start + diff;
+			arithmeticArrayHelper(2, diff, seq);
+			return seq;
+		}
 	}
 	
 	/**
@@ -46,7 +70,12 @@ public class RecursiveMethods {
 	void arithmeticArrayHelper(int i, int diff, int[] seq) {
 		/*
 		 * Your Task
-		 */ 
+		 */		
+		if(i < seq.length) {
+			seq[i] = seq[i - 1] + diff;
+			arithmeticArrayHelper(i + 1, diff, seq);
+		}
+		
 	}
 	
 	/**
@@ -69,7 +98,26 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticListHelper.
 		 */
-		return null;
+		List<Integer> seq = new ArrayList<Integer>();
+		
+		if(n == 0) {
+			return seq;
+		}
+		
+		else if(n == 1) {
+			seq.add(0, start);
+		}
+		else if(n == 2) {
+			seq.add(0, start);
+			seq.add(1, start + diff);
+		}
+		else {
+			seq.add(0, start);
+			seq.add(1, start + diff);
+			arithmeticListHelper(2, diff, seq, n);
+		}
+		
+		return seq;
 	}
 	
 	/**
@@ -87,6 +135,11 @@ public class RecursiveMethods {
 		/*
 		 * Your Task
 		 */
+		if(i < n) {
+			seq.add(i, seq.get(i - 1) + diff);
+			arithmeticListHelper(i + 1, diff, seq, n);
+		}
+		
 	}
 	
 	/**
@@ -107,7 +160,19 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method isArithmeticArrayHelper.
 		 */
-		return false;
+		
+		if(a.length == 0) {
+			return true;
+		}
+		else if(a.length == 1) {
+			return true;
+		}
+		else if(a.length == 2) {
+			return true;
+		}
+		else {
+			return isArithmeticArrayHelper(2, (a[1] - a[0]), a);
+		}
 	}
 	
 	/**
@@ -127,8 +192,12 @@ public class RecursiveMethods {
 	boolean isArithmeticArrayHelper(int i, int diff, int[] a) {
 		/*
 		 * Your Task
-		 */
-		return false;
+		 */		
+		if(i < a.length) {
+		return (a[i] - a[i - 1] == (diff)) && isArithmeticArrayHelper(i + 1, diff, a);
+		}
+		return true;
+		
 	}
 	
 	/**
@@ -149,7 +218,19 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method isArithmeticListHelper.
 		 */
-		return false;
+		
+		if(l.isEmpty()) {
+			return true;
+		}
+		else if(l.size() == 1) {
+			return true;
+		}
+		else if(l.size() == 2) {
+			return true;
+		}
+		else {
+			return isArithmeticListHelper(2, (l.get(2) - l.get(1)), l);
+		}
 	}
 	
 	/**
@@ -170,7 +251,10 @@ public class RecursiveMethods {
 		/*
 		 * Your Task
 		 */
-		return false;
+		if(i < l.size()) {
+			return (l.get(i) - l.get(i - 1) == (diff)) && isArithmeticListHelper(i + 1, diff, l);
+		}
+		return true;
 	}
 	
 	/**
@@ -190,8 +274,78 @@ public class RecursiveMethods {
 	public int[] insertIntoSortedArray(int[] a, int i) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
-		 */
+		 */		
+		
+		if(a.length == 0) {
+			int[] b = {i};
+			return b;
+		}
+		else if(a.length == 1) {
+			if(a[0] > i) {
+				int[] b = {i, a[0]};
+				return b;
+			}
+			else {
+				int[] b = {a[0], i};
+				return b;
+			}
+		}
+		else {
+			int[] b = new int[a.length + 1];
+			
+			// If i is less than the first element of a, move all elements of b by 1 index.
+			if(a[0] >= i) {
+				b[0] = i;
+				copyArray(a, b, 0, "start");
+				return b;
+			}
+			// If i is greater than the last element of a, move all elements of a by 0 index, and add i to the end of b.
+			else if(a[a.length - 1] <= i) {
+				copyArray(a, b, 0, "end");
+				b[a.length] = i;
+				return b;
+			}
+			// If i is greater than some values of a and smaller than some values of a, find from which index to adjust 
+			// array b from.
+			else if(i > a[0] && i < a[a.length - 1]){
+				addToMiddleOfSortedArray(i, a, b, 0);
+				return b;
+			}
+		}
+		
 		return null;
+	}
+	
+	/*
+	 * Helps the insertIntoSortedArray method above recursively.
+	 * Moves elements of a from a certain index, and copies it to b.
+	 */
+	void addToMiddleOfSortedArray(int i, int[] a, int[] b, int index) {
+		// Find where i needs to go 
+		if(i > a[index]) {
+			b[index] = a[index];
+			addToMiddleOfSortedArray(i, a, b, index + 1);
+		}
+		if(i <= a[index]) {
+			b[index] = i;
+			copyArray(a, b, index, "start");
+		}
+	}
+	
+	/*
+	 * copies one array into the array 
+	 */
+	void copyArray(int[] a, int[]b, int index, String place) {
+		if (index < a.length) {
+			if (place.equals("start")) {
+				b[index + 1] = a[index];
+				copyArray(a, b, index + 1, "start");
+			}
+			if (place.equals("end")) {
+				b[index] = a[index];
+				copyArray(a, b, index + 1, "end");
+			}
+		}
 	}
 	
 	/**
@@ -211,8 +365,77 @@ public class RecursiveMethods {
 	public List<Integer> insertIntoSortedList(List<Integer> list, int i) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
-		 */
-		return null;
+		 */	
+		// If list is empty, return a new list with i in it.
+		if(list.size() == 0) {
+			List<Integer> a = new LinkedList<Integer>();
+			a.add(i);
+			return a;
+		}
+		// If list has one only element, make a new list, and check if element in a is greater or
+		// smaller than i.
+		else if(list.size() == 1) {
+			List<Integer> a = new LinkedList<Integer>();
+			// Check whether i is small or big
+			if(list.get(0) < i) {
+				a.add(0, 1);
+				a.add(1, i);
+			}
+			if(list.get(0) >= i) {
+				a.add(0, i);
+				a.add(1, list.get(0));
+			}
+			return a;
+		}
+		else {	
+			List<Integer> b = new LinkedList<Integer>();
+			// If i is less than the first element of a, move all elements of b by 1 index.
+			if(list.get(0) >= i) {
+				b.add(0, i);
+				copyList(list, b, 0, "start");
+				return b;
+			}
+			// If i is greater than the last element of a, move all elements of a by 0 index, and add i to the end of b.
+			else if(list.get(0) >= i) {
+				copyList(list, b, 0, "end");
+				b.add(list.size(), i);
+				return b;
+			}
+			// If i is greater than some values of a and smaller than some values of a, find from which index to adjust 
+			// list b from.
+			else {
+				moveFromList(i, list, b, 0);
+				return b;
+			}			
+		}
+	}
+	
+	/*
+	 * If some values are greater and some values are smaller than i, find where i is greater or equal to and move all the other 
+	 * characters 1 unit to the right.
+	 */
+	void moveFromList(int i, List<Integer> list, List<Integer> b, int index) {
+		if(i > list.get(index)) {
+			b.add(index, list.get(index));
+			moveFromList(i, list, b, index);
+		}
+		if(i <= list.get(index)) {
+			b.add(index, i);
+			copyList(list, b, index, "start");
+		}
+	}
+	
+	void copyList(List<Integer> list, List<Integer> b, int index, String place) {
+		if(index < list.size()) {
+			if(place.equals("Start")) {
+				b.add(index + 1, list.get(index));
+				copyList(list, b, index + 1, "start");
+			}
+			if(place.equals("end")) {
+				b.add(index, list.get(index));
+				copyList(list, b, index + 1, "end");
+			}
+		}
 	}
 	
 	/**

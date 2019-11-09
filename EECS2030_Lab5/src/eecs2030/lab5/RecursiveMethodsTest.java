@@ -1,3 +1,5 @@
+package eecs2030.lab5;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
