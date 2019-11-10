@@ -1,6 +1,7 @@
 package eecs2030.lab5;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -229,7 +230,7 @@ public class RecursiveMethods {
 			return true;
 		}
 		else {
-			return isArithmeticListHelper(2, (l.get(2) - l.get(1)), l);
+			return isArithmeticListHelper(2, (l.get(1) - l.get(0)), l);
 		}
 	}
 	
@@ -252,7 +253,8 @@ public class RecursiveMethods {
 		 * Your Task
 		 */
 		if(i < l.size()) {
-			return (l.get(i) - l.get(i - 1) == (diff)) && isArithmeticListHelper(i + 1, diff, l);
+			return (l.get(i) - l.get(i - 1) == (diff)) && 
+					isArithmeticListHelper(i + 1, (l.get(i) - l.get(i - 1)), l);
 		}
 		return true;
 	}
@@ -378,7 +380,7 @@ public class RecursiveMethods {
 			List<Integer> a = new LinkedList<Integer>();
 			// Check whether i is small or big
 			if(list.get(0) < i) {
-				a.add(0, 1);
+				a.add(0, list.get(0));
 				a.add(1, i);
 			}
 			if(list.get(0) >= i) {
@@ -387,16 +389,17 @@ public class RecursiveMethods {
 			}
 			return a;
 		}
+		// If list has more than 2 entries:
 		else {	
 			List<Integer> b = new LinkedList<Integer>();
 			// If i is less than the first element of a, move all elements of b by 1 index.
-			if(list.get(0) >= i) {
+			if(list.get(0) > i) {
 				b.add(0, i);
 				copyList(list, b, 0, "start");
 				return b;
 			}
 			// If i is greater than the last element of a, move all elements of a by 0 index, and add i to the end of b.
-			else if(list.get(0) >= i) {
+			else if(list.get(list.size() - 1) <= i) {
 				copyList(list, b, 0, "end");
 				b.add(list.size(), i);
 				return b;
@@ -415,19 +418,21 @@ public class RecursiveMethods {
 	 * characters 1 unit to the right.
 	 */
 	void moveFromList(int i, List<Integer> list, List<Integer> b, int index) {
-		if(i > list.get(index)) {
-			b.add(index, list.get(index));
-			moveFromList(i, list, b, index);
-		}
-		if(i <= list.get(index)) {
-			b.add(index, i);
-			copyList(list, b, index, "start");
+		if(index < list.size()) {
+			if(i > list.get(index)) {
+				b.add(index, list.get(index));
+				moveFromList(i, list, b, index + 1);
+			}
+			if(i <= list.get(index)) {
+				b.add(index, i);
+				copyList(list, b, index, "start");
+			}
 		}
 	}
 	
 	void copyList(List<Integer> list, List<Integer> b, int index, String place) {
 		if(index < list.size()) {
-			if(place.equals("Start")) {
+			if(place.equals("start")) {
 				b.add(index + 1, list.get(index));
 				copyList(list, b, index + 1, "start");
 			}
@@ -458,7 +463,32 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
 		 */
+		
+		// If both arrays are empty, return an empty array
+		if(left.length == 0 && right.length == 0) {
+			return left;
+		}
+		// If one of the two arrays is empty, then return the other array in non-descending order.
+		else if(left.length == 0 || right.length == 0) {
+			if(left.length == 0) {
+			//	Arrays.sort(right);
+				int[] rightSorted = new int[right.length];
+				sortRightArray(right, 0, rightSorted);
+				return rightSorted;
+			}
+			if(right.length == 0) {
+				return left;
+			}
+		}
+		
 		return null;
+	}
+	
+	void sortRightArray(int[] right, int index, int[] rightSorted) {		
+		if (index < right.length) {
+			rightSorted[index] = right[right.length - 1 - index];
+			sortRightArray(right, index + 1, rightSorted);
+		}
 	}
 	
 	/**
@@ -483,4 +513,16 @@ public class RecursiveMethods {
 		 */
 		return null;
 	}
+	
+//	public static void main(String[] args) {
+//		RecursiveMethods rm = new RecursiveMethods();		
+//		int[] a = {28, 25, 22, 19};
+//
+//		List<Integer> b = new ArrayList<Integer>();
+//		for(int i = 0; i < a.length; i++) {
+//			b.add(a[i]);
+//		}
+//		
+//		System.out.println(rm.isArithmeticList(b));
+//	}
 }
