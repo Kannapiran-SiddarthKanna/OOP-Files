@@ -1,5 +1,8 @@
 package eecs2030.lab5;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -480,6 +483,21 @@ public class RecursiveMethods {
 				return left;
 			}
 		}
+		else {
+			/*
+			 * If there are elements in both arrays, make both into non descending order, 
+			 * and then sort element by element
+			 */
+			
+			int[] rightSorted = new int[right.length];
+			sortRightArray(right, 0, rightSorted);
+			
+			int[] finalArray = new int[left.length + right.length];			
+			
+			makeFinalArray(left, rightSorted, finalArray, 0, 0, 0);
+			
+			return finalArray;
+		}
 		
 		return null;
 	}
@@ -488,6 +506,41 @@ public class RecursiveMethods {
 		if (index < right.length) {
 			rightSorted[index] = right[right.length - 1 - index];
 			sortRightArray(right, index + 1, rightSorted);
+		}
+	}
+	
+	void makeFinalArray(int[] left, int[] rightSorted, int[] finalArray, int j, int k, int l) {
+		if (l < finalArray.length) {			
+			// Do below until one of the arrays elements get transfered fully.
+			if (j < left.length && k != rightSorted.length) {
+				if (left[j] <= rightSorted[k]) {
+					finalArray[l] = left[j];
+					j++;
+					l++;
+					makeFinalArray(left, rightSorted, finalArray, j, k, l);
+				}
+			}
+			if (k < rightSorted.length && j != left.length) {
+				if (rightSorted[k] < left[j]) {
+					finalArray[l] = rightSorted[k];
+					l++;
+					k++;
+					makeFinalArray(left, rightSorted, finalArray, j, k, l);
+				}
+			}
+			if (j == left.length || k == rightSorted.length) {
+				if (j == left.length && k != rightSorted.length) {
+					finalArray[l] = rightSorted[k];
+					l++;
+					k++;
+					makeFinalArray(left, rightSorted, finalArray, j, k, l);
+				} else if (k == rightSorted.length && j != left.length) {
+					finalArray[l] = left[j];
+					j++;
+					l++;
+					makeFinalArray(left, rightSorted, finalArray, j, k, l);
+				}
+			}			
 		}
 	}
 	
@@ -511,18 +564,117 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
 		 */
+		// If both lists are empty, return an empty list
+		if(left.size() == 0 && right.size() == 0) {
+			List<Integer> finalList = new ArrayList<Integer>();
+			return finalList;
+		}
+		if(left.size() == 0 || right.size() == 0) {
+			if(left.size() == 0 && right.size() != 0) {
+				List<Integer> finalList = new ArrayList<Integer>();
+				sortRightList(right, 0, finalList);
+				return finalList;
+			}
+			if(left.size() != 0 && right.size() == 0) {
+				return left;
+			}
+		}
+		/*
+		 * If both lists have entries in them, sort the right list in non-descending order,
+		 * and then sort element by element
+		 */
+		else {
+			List<Integer> rightSorted = new ArrayList<Integer>();
+			sortRightList(right, 0, rightSorted);
+			
+			List<Integer> finalList = new ArrayList<Integer>();
+			
+			makeFinalList(left, rightSorted, finalList, 0, 0, 0);
+			
+			return finalList;
+			
+		}
+		
 		return null;
 	}
 	
-//	public static void main(String[] args) {
-//		RecursiveMethods rm = new RecursiveMethods();		
-//		int[] a = {28, 25, 22, 19};
-//
-//		List<Integer> b = new ArrayList<Integer>();
-//		for(int i = 0; i < a.length; i++) {
-//			b.add(a[i]);
-//		}
-//		
-//		System.out.println(rm.isArithmeticList(b));
-//	}
+	void makeFinalList(List<Integer> left, List<Integer> rightSorted, List<Integer> finalList, int j, int k, int l) {
+		int outState = left.size() + rightSorted.size();
+		if(l < outState) {
+			// Do below until one of the lists is fully copied into the finalList
+			if(j < left.size() && k != rightSorted.size()) {
+				if(left.get(j) <= rightSorted.get(k)) {
+					finalList.add(l, left.get(j));
+					j++;
+					l++;
+					makeFinalList(left, rightSorted, finalList, j, k, l);
+				}
+				else {
+					finalList.add(l, rightSorted.get(k));
+					l++;
+					k++;
+					makeFinalList(left, rightSorted, finalList, j, k, l);
+				}
+			}
+//			else if(k < rightSorted.size() && j != left.size()) {
+//				if(rightSorted.get(k) < left.get(j)) {
+//					finalList.add(l, rightSorted.get(k));
+//					j++;
+//					k++;
+//					makeFinalList(left, rightSorted, finalList, j, k, l);
+//				}
+//				else {
+//					finalList.add(l, left.get(j));
+//					l++;
+//					j++;
+//					makeFinalList(left, rightSorted, finalList, j, k, l);
+//				}
+//			}
+			else if(j == left.size() || k == rightSorted.size()) {
+				if(j == left.size() && k != rightSorted.size()) {
+					finalList.add(l, rightSorted.get(k));
+					l++;
+					k++;
+					makeFinalList(left, rightSorted, finalList, j, k, l);
+				}
+				else if(k == rightSorted.size() && j != left.size()) {
+					finalList.add(l, left.get(j));
+					j++;
+					l++;
+					makeFinalList(left, rightSorted, finalList, j, k, l);
+				}
+			}			
+		}
+	}
+	
+	void sortRightList(List<Integer> right, int index, List<Integer> rightSorted) {		
+		if (index < right.size()) {
+			rightSorted.add(right.get(right.size() - 1 - index));
+			sortRightList(right, index + 1, rightSorted);
+		}
+	}
+	
+	public List<Integer> a2l(int[] a) {
+		List<Integer> list = new ArrayList<>();
+		for(int i = 0; i < a.length; i ++) {
+			list.add(a[i]);
+		}
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		RecursiveMethods rm = new RecursiveMethods();
+		int[] L = {-3, -1, 1, 3, 5, 7};
+		int[] R = {10, 9, 8, 6, 4, 2};
+		List<Integer> left = rm.a2l(L);
+		List<Integer> right = rm.a2l(R);
+		List<Integer> rightSorted = new ArrayList<Integer>();
+		rm.sortRightList(right,  0, rightSorted);
+		
+		List<Integer> finalList = new ArrayList<Integer>();
+		rm.makeFinalList(left, rightSorted, finalList, 0, 0, 0);
+		System.out.println(finalList);
+
+		
+	}
 }
