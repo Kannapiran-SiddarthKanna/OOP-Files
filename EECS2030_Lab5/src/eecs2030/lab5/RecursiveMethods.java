@@ -19,40 +19,42 @@ import java.util.List;
  */
 public class RecursiveMethods {
 	/**
-	 * Return an array storing the first n numbers in an arithmetic sequence,
-	 * with initial term 'start' and common difference 'diff'.  
-	 * You can assume that n is non-negative (larger than or equal to 0).
-	 * e.g., arithmeticArray(2, 3, 5) returns an array {2, 5, 8, 11, 14}.
+	 * Return an array storing the first n numbers in an arithmetic sequence, with
+	 * initial term 'start' and common difference 'diff'. You can assume that n is
+	 * non-negative (larger than or equal to 0). e.g., arithmeticArray(2, 3, 5)
+	 * returns an array {2, 5, 8, 11, 14}.
+	 * 
 	 * @param start the first term in an arithmetic sequence
-	 * @param diff the common difference between terms in an arithmetic sequence
-	 * @param n the first n numbers in an arithmetic sequence 
-	 * @return an array representing the first n numbers in the specified arithmetic sequence
+	 * @param diff  the common difference between terms in an arithmetic sequence
+	 * @param n     the first n numbers in an arithmetic sequence
+	 * @return an array representing the first n numbers in the specified arithmetic
+	 *         sequence
 	 * 
-	 * <b>You are forbidden to use the arithmeticList method below to solve this problem.</b> 
+	 *         <b>You are forbidden to use the arithmeticList method below to solve
+	 *         this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while). 
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public int[] arithmeticArray(int start, int diff, int n) {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticArrayHelper.
-		 */	
-		
+		 */
+
 		// If n = 0, return empty {];
-		if(n == 0) {
+		if (n == 0) {
 			return new int[0];
 		}
 		// If n = 1, return an array with first element as start.
-		if(n == 1) {
-			int[] seq = {start};
+		if (n == 1) {
+			int[] seq = { start };
 			return seq;
 		}
-		if(n == 2) {
-			int[] seq = {start, start + diff};
+		if (n == 2) {
+			int[] seq = { start, start + diff };
 			return seq;
-		}
-		else {
+		} else {
 			int[] seq = new int[n];
 			seq[0] = start;
 			seq[1] = start + diff;
@@ -60,287 +62,299 @@ public class RecursiveMethods {
 			return seq;
 		}
 	}
-	
+
 	/**
 	 * This is a recursive helper method expected to be used by arithmeticArray.
 	 * 
-	 * @param i position in `seq` to be assigned to
-	 * @param diff common difference of the arithmetics sequence 
-	 * @param seq a partially filled arithmetic sequence
-	 *  
-	 * Each recursive call to this helper method stores at index `i` of the resulting
-	 * arithmetic sequence `seq`, which is assumed to have been partially filled at indices 0, 1, ..., i - 1. 
+	 * @param i    position in `seq` to be assigned to
+	 * @param diff common difference of the arithmetics sequence
+	 * @param seq  a partially filled arithmetic sequence
+	 * 
+	 *             Each recursive call to this helper method stores at index `i` of
+	 *             the resulting arithmetic sequence `seq`, which is assumed to have
+	 *             been partially filled at indices 0, 1, ..., i - 1.
 	 */
 	void arithmeticArrayHelper(int i, int diff, int[] seq) {
 		/*
 		 * Your Task
-		 */		
-		if(i < seq.length) {
+		 */
+		if (i < seq.length) {
 			seq[i] = seq[i - 1] + diff;
 			arithmeticArrayHelper(i + 1, diff, seq);
 		}
-		
+
 	}
-	
+
 	/**
-	 * Return a list storing the first n numbers in an arithmetic sequence,
-	 * with initial term 'start' and common difference 'diff'.  
-	 * You can assume that n is non-negative (larger than or equal to 0).
-	 * e.g., arithmeticList(2, 3, 5) returns a list {2, 5, 8, 11, 14}.
+	 * Return a list storing the first n numbers in an arithmetic sequence, with
+	 * initial term 'start' and common difference 'diff'. You can assume that n is
+	 * non-negative (larger than or equal to 0). e.g., arithmeticList(2, 3, 5)
+	 * returns a list {2, 5, 8, 11, 14}.
+	 * 
 	 * @param start the first term in an arithmetic sequence
-	 * @param diff the common difference between terms in an arithmetic sequence
-	 * @param n the first n numbers in an arithmetic sequence 
-	 * @return a list representing the first n numbers in the specified arithmetic sequence
+	 * @param diff  the common difference between terms in an arithmetic sequence
+	 * @param n     the first n numbers in an arithmetic sequence
+	 * @return a list representing the first n numbers in the specified arithmetic
+	 *         sequence
 	 * 
-	 * <b>You are forbidden to use the arithmeticArray method above to solve this problem.</b>
+	 *         <b>You are forbidden to use the arithmeticArray method above to solve
+	 *         this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while). 
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public List<Integer> arithmeticList(int start, int diff, int n) {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticListHelper.
 		 */
 		List<Integer> seq = new ArrayList<Integer>();
-		
-		if(n == 0) {
+
+		if (n == 0) {
 			return seq;
 		}
-		
-		else if(n == 1) {
+
+		else if (n == 1) {
 			seq.add(0, start);
-		}
-		else if(n == 2) {
+		} else if (n == 2) {
 			seq.add(0, start);
 			seq.add(1, start + diff);
-		}
-		else {
+		} else {
 			seq.add(0, start);
 			seq.add(1, start + diff);
 			arithmeticListHelper(2, diff, seq, n);
 		}
-		
+
 		return seq;
 	}
-	
+
 	/**
 	 * This is a recursive helper method expected to be used by arithmeticList.
 	 * 
-	 * @param i position in `seq` to be assigned to
-	 * @param diff common difference of the arithmetics sequence 
-	 * @param seq a partially filled arithmetic sequence
-	 * @param n size of the arithmetic sequence to be built eventually
-	 *  
-	 * Each recursive call to this helper method stores at index `i` of the resulting
-	 * arithmetic sequence `seq`, which is assumed to have been partially filled at indices 0, 1, ..., i - 1. 
+	 * @param i    position in `seq` to be assigned to
+	 * @param diff common difference of the arithmetics sequence
+	 * @param seq  a partially filled arithmetic sequence
+	 * @param n    size of the arithmetic sequence to be built eventually
+	 * 
+	 *             Each recursive call to this helper method stores at index `i` of
+	 *             the resulting arithmetic sequence `seq`, which is assumed to have
+	 *             been partially filled at indices 0, 1, ..., i - 1.
 	 */
 	void arithmeticListHelper(int i, int diff, List<Integer> seq, int n) {
 		/*
 		 * Your Task
 		 */
-		if(i < n) {
+		if (i < n) {
 			seq.add(i, seq.get(i - 1) + diff);
 			arithmeticListHelper(i + 1, diff, seq, n);
 		}
-		
+
 	}
-	
+
 	/**
-	 * Return whether or not an array represents the first n numbers of an arithmetic sequence.
-	 * An arithmetic sequence has a common difference between every two adjacent terms.   
-	 * The array may or may not be empty.
-	 * e.g., isArithmeticArray({1, 3, 5, 8, 10}) returns false and isArithmeticArray({1, 3, 5, 7, 9}) returns true (because the common difference is 2).
+	 * Return whether or not an array represents the first n numbers of an
+	 * arithmetic sequence. An arithmetic sequence has a common difference between
+	 * every two adjacent terms. The array may or may not be empty. e.g.,
+	 * isArithmeticArray({1, 3, 5, 8, 10}) returns false and isArithmeticArray({1,
+	 * 3, 5, 7, 9}) returns true (because the common difference is 2).
+	 * 
 	 * @param a an array
-	 * @return true if input array a represents an arithmetic sequence; false otherwise.
+	 * @return true if input array a represents an arithmetic sequence; false
+	 *         otherwise.
 	 * 
-	 * <b>You are forbidden to use the isArithmeticList method below to solve this problem.</b>
+	 *         <b>You are forbidden to use the isArithmeticList method below to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public boolean isArithmeticArray(int[] a) {
 		/*
 		 * Your Task: Make use of the recursive method isArithmeticArrayHelper.
 		 */
-		
-		if(a.length == 0) {
+
+		if (a.length == 0) {
 			return true;
-		}
-		else if(a.length == 1) {
+		} else if (a.length == 1) {
 			return true;
-		}
-		else if(a.length == 2) {
+		} else if (a.length == 2) {
 			return true;
-		}
-		else {
+		} else {
 			return isArithmeticArrayHelper(2, (a[1] - a[0]), a);
 		}
 	}
-	
+
 	/**
 	 * This is a recursive helper method expected to be used by isArithmeticArray.
 	 * 
-	 * @param i position in `seq`, starting from which the remaining sub-sequence is an arithmetic sequence
+	 * @param i    position in `seq`, starting from which the remaining sub-sequence
+	 *             is an arithmetic sequence
 	 * @param diff common difference of the arithmetics sequence
-	 * @param a an array which may or may not be an arithmetic sequence
-	 * @return whether or not the sub-sequence of `a` with indices i - 1, i, i + 1, ..., a.length - 1 is an arithmetic sequence 
-	 *  
-	 * Each recursive call to this helper method considers if elements of `a` at indices `i - 1` and `i`
-	 * make two valid adjacent elements in the arithmetic sequence, 
-	 * i.e., their difference is equal to the common difference `diff`. 
-	 * Also, it considers if the remaining sub-sequence (indices i + 1, i + 2, ..., a.length - 1) 
-	 * is an arithmetic sequence with common difference `diff`. 
+	 * @param a    an array which may or may not be an arithmetic sequence
+	 * @return whether or not the sub-sequence of `a` with indices i - 1, i, i + 1,
+	 *         ..., a.length - 1 is an arithmetic sequence
+	 * 
+	 *         Each recursive call to this helper method considers if elements of
+	 *         `a` at indices `i - 1` and `i` make two valid adjacent elements in
+	 *         the arithmetic sequence, i.e., their difference is equal to the
+	 *         common difference `diff`. Also, it considers if the remaining
+	 *         sub-sequence (indices i + 1, i + 2, ..., a.length - 1) is an
+	 *         arithmetic sequence with common difference `diff`.
 	 */
 	boolean isArithmeticArrayHelper(int i, int diff, int[] a) {
 		/*
 		 * Your Task
-		 */		
-		if(i < a.length) {
-		return (a[i] - a[i - 1] == (diff)) && isArithmeticArrayHelper(i + 1, diff, a);
+		 */
+		if (i < a.length) {
+			return (a[i] - a[i - 1] == (diff)) && isArithmeticArrayHelper(i + 1, diff, a);
 		}
 		return true;
-		
+
 	}
-	
+
 	/**
-	 * Return whether or not a list represents the first n numbers of an arithmetic sequence.
-	 * An arithmetic sequence has a common difference between every two adjacent terms.   
-	 * The list may or may not be empty.
-	 * e.g., isArithmeticList({1, 3, 5, 8, 10}) returns false and isArithmeticList({1, 3, 5, 7, 9}) returns true (because the common difference is 2).
+	 * Return whether or not a list represents the first n numbers of an arithmetic
+	 * sequence. An arithmetic sequence has a common difference between every two
+	 * adjacent terms. The list may or may not be empty. e.g., isArithmeticList({1,
+	 * 3, 5, 8, 10}) returns false and isArithmeticList({1, 3, 5, 7, 9}) returns
+	 * true (because the common difference is 2).
+	 * 
 	 * @param l a list
-	 * @return true if input list l represents an arithmetic sequence; false otherwise.
+	 * @return true if input list l represents an arithmetic sequence; false
+	 *         otherwise.
 	 * 
-	 * <b>You are forbidden to use the isArithmeticArray method above to solve this problem.</b>
+	 *         <b>You are forbidden to use the isArithmeticArray method above to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public boolean isArithmeticList(List<Integer> l) {
 		/*
 		 * Your Task: Make use of the recursive method isArithmeticListHelper.
 		 */
-		
-		if(l.isEmpty()) {
+
+		if (l.isEmpty()) {
 			return true;
-		}
-		else if(l.size() == 1) {
+		} else if (l.size() == 1) {
 			return true;
-		}
-		else if(l.size() == 2) {
+		} else if (l.size() == 2) {
 			return true;
-		}
-		else {
+		} else {
 			return isArithmeticListHelper(2, (l.get(1) - l.get(0)), l);
 		}
 	}
-	
+
 	/**
 	 * This is a recursive helper method expected to be used by isArithmeticList.
 	 * 
-	 * @param i position in `seq`, starting from which the remaining sub-sequence is an arithmetic sequence
-	 * @param diff common difference of the arithmetics sequence 
-	 * @param l a list which may or may not be an arithmetic sequence
-	 * @return whether or not the sub-sequence of `l` with indices i - 1, i, i + 1, ..., l.size() - 1 is an arithmetic sequence
-	 *  
-	 * Each recursive call to this helper method considers if elements of `l` at indices `i - 1` and `i`
-	 * make two valid adjacent elements in the arithmetic sequence, 
-	 * i.e., their difference is equal to the common difference `diff`. 
-	 * Also, it considers if the remaining sub-sequence (indices i + 1, i + 2, ..., l.size() - 1) 
-	 * is an arithmetic sequence with common difference `diff`. 
+	 * @param i    position in `seq`, starting from which the remaining sub-sequence
+	 *             is an arithmetic sequence
+	 * @param diff common difference of the arithmetics sequence
+	 * @param l    a list which may or may not be an arithmetic sequence
+	 * @return whether or not the sub-sequence of `l` with indices i - 1, i, i + 1,
+	 *         ..., l.size() - 1 is an arithmetic sequence
+	 * 
+	 *         Each recursive call to this helper method considers if elements of
+	 *         `l` at indices `i - 1` and `i` make two valid adjacent elements in
+	 *         the arithmetic sequence, i.e., their difference is equal to the
+	 *         common difference `diff`. Also, it considers if the remaining
+	 *         sub-sequence (indices i + 1, i + 2, ..., l.size() - 1) is an
+	 *         arithmetic sequence with common difference `diff`.
 	 */
 	boolean isArithmeticListHelper(int i, int diff, List<Integer> l) {
 		/*
 		 * Your Task
 		 */
-		if(i < l.size()) {
-			return (l.get(i) - l.get(i - 1) == (diff)) && 
-					isArithmeticListHelper(i + 1, (l.get(i) - l.get(i - 1)), l);
+		if (i < l.size()) {
+			return (l.get(i) - l.get(i - 1) == (diff)) && isArithmeticListHelper(i + 1, (l.get(i) - l.get(i - 1)), l);
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Given a sorted input array a, return a sorted array of size a.length + 1, 
+	 * Given a sorted input array a, return a sorted array of size a.length + 1,
 	 * consisting of all elements of array a and integer i.
+	 * 
 	 * @param a an array that is sorted in a non-descending order
 	 * @param i an integer
-	 * @return a sorted array of size a.length + 1, consisting of all elements of array a and integer i.
-	 * e.g., insertIntoSortedArray({1, 2, 4, 5}, 3) returns a sorted array {1, 2, 3, 4, 5}.
+	 * @return a sorted array of size a.length + 1, consisting of all elements of
+	 *         array a and integer i. e.g., insertIntoSortedArray({1, 2, 4, 5}, 3)
+	 *         returns a sorted array {1, 2, 3, 4, 5}.
 	 * 
-	 * <b>You are forbidden to use the insertIntoSortedList method below to solve this problem.</b>
+	 *         <b>You are forbidden to use the insertIntoSortedList method below to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public int[] insertIntoSortedArray(int[] a, int i) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
-		 */		
-		
-		if(a.length == 0) {
-			int[] b = {i};
+		 */
+
+		if (a.length == 0) {
+			int[] b = { i };
 			return b;
-		}
-		else if(a.length == 1) {
-			if(a[0] > i) {
-				int[] b = {i, a[0]};
+		} else if (a.length == 1) {
+			if (a[0] > i) {
+				int[] b = { i, a[0] };
+				return b;
+			} else {
+				int[] b = { a[0], i };
 				return b;
 			}
-			else {
-				int[] b = {a[0], i};
-				return b;
-			}
-		}
-		else {
+		} else {
 			int[] b = new int[a.length + 1];
-			
+
 			// If i is less than the first element of a, move all elements of b by 1 index.
-			if(a[0] >= i) {
+			if (a[0] >= i) {
 				b[0] = i;
 				copyArray(a, b, 0, "start");
 				return b;
 			}
-			// If i is greater than the last element of a, move all elements of a by 0 index, and add i to the end of b.
-			else if(a[a.length - 1] <= i) {
+			// If i is greater than the last element of a, move all elements of a by 0
+			// index, and add i to the end of b.
+			else if (a[a.length - 1] <= i) {
 				copyArray(a, b, 0, "end");
 				b[a.length] = i;
 				return b;
 			}
-			// If i is greater than some values of a and smaller than some values of a, find from which index to adjust 
+			// If i is greater than some values of a and smaller than some values of a, find
+			// from which index to adjust
 			// array b from.
-			else if(i > a[0] && i < a[a.length - 1]){
+			else if (i > a[0] && i < a[a.length - 1]) {
 				addToMiddleOfSortedArray(i, a, b, 0);
 				return b;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/*
-	 * Helps the insertIntoSortedArray method above recursively.
-	 * Moves elements of a from a certain index, and copies it to b.
+	 * Helps the insertIntoSortedArray method above recursively. Moves elements of a
+	 * from a certain index, and copies it to b.
 	 */
 	void addToMiddleOfSortedArray(int i, int[] a, int[] b, int index) {
-		// Find where i needs to go 
-		if(i > a[index]) {
+		// Find where i needs to go
+		if (i > a[index]) {
 			b[index] = a[index];
 			addToMiddleOfSortedArray(i, a, b, index + 1);
 		}
-		if(i <= a[index]) {
+		if (i <= a[index]) {
 			b[index] = i;
 			copyArray(a, b, index, "start");
 		}
 	}
-	
+
 	/*
-	 * copies one array into the array 
+	 * copies one array into the array
 	 */
-	void copyArray(int[] a, int[]b, int index, String place) {
+	void copyArray(int[] a, int[] b, int index, String place) {
 		if (index < a.length) {
 			if (place.equals("start")) {
 				b[index + 1] = a[index];
@@ -352,165 +366,174 @@ public class RecursiveMethods {
 			}
 		}
 	}
-	
+
 	/**
-	 * Given a sorted input list, return a sorted list of size list.size() + 1, 
+	 * Given a sorted input list, return a sorted list of size list.size() + 1,
 	 * consisting of all elements of the input list and integer i.
+	 * 
 	 * @param list a list that is sorted in a non-descending order
-	 * @param i an integer
-	 * @return a sorted list of size list.size() + 1, consisting of all elements of the input list and integer i.
-	 * e.g., insertIntoSortedList({1, 2, 4, 5}, 3) returns a sorted list {1, 2, 3, 4, 5}.
+	 * @param i    an integer
+	 * @return a sorted list of size list.size() + 1, consisting of all elements of
+	 *         the input list and integer i. e.g., insertIntoSortedList({1, 2, 4,
+	 *         5}, 3) returns a sorted list {1, 2, 3, 4, 5}.
 	 * 
-	 * <b>You are forbidden to use the insertIntoSortedArray method above to solve this problem.</b>
+	 *         <b>You are forbidden to use the insertIntoSortedArray method above to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public List<Integer> insertIntoSortedList(List<Integer> list, int i) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
-		 */	
+		 */
 		// If list is empty, return a new list with i in it.
-		if(list.size() == 0) {
+		if (list.size() == 0) {
 			List<Integer> a = new LinkedList<Integer>();
 			a.add(i);
 			return a;
 		}
-		// If list has one only element, make a new list, and check if element in a is greater or
+		// If list has one only element, make a new list, and check if element in a is
+		// greater or
 		// smaller than i.
-		else if(list.size() == 1) {
+		else if (list.size() == 1) {
 			List<Integer> a = new LinkedList<Integer>();
 			// Check whether i is small or big
-			if(list.get(0) < i) {
+			if (list.get(0) < i) {
 				a.add(0, list.get(0));
 				a.add(1, i);
 			}
-			if(list.get(0) >= i) {
+			if (list.get(0) >= i) {
 				a.add(0, i);
 				a.add(1, list.get(0));
 			}
 			return a;
 		}
 		// If list has more than 2 entries:
-		else {	
+		else {
 			List<Integer> b = new LinkedList<Integer>();
 			// If i is less than the first element of a, move all elements of b by 1 index.
-			if(list.get(0) > i) {
+			if (list.get(0) > i) {
 				b.add(0, i);
 				copyList(list, b, 0, "start");
 				return b;
 			}
-			// If i is greater than the last element of a, move all elements of a by 0 index, and add i to the end of b.
-			else if(list.get(list.size() - 1) <= i) {
+			// If i is greater than the last element of a, move all elements of a by 0
+			// index, and add i to the end of b.
+			else if (list.get(list.size() - 1) <= i) {
 				copyList(list, b, 0, "end");
 				b.add(list.size(), i);
 				return b;
 			}
-			// If i is greater than some values of a and smaller than some values of a, find from which index to adjust 
+			// If i is greater than some values of a and smaller than some values of a, find
+			// from which index to adjust
 			// list b from.
 			else {
 				moveFromList(i, list, b, 0);
 				return b;
-			}			
+			}
 		}
 	}
-	
+
 	/*
-	 * If some values are greater and some values are smaller than i, find where i is greater or equal to and move all the other 
-	 * characters 1 unit to the right.
+	 * If some values are greater and some values are smaller than i, find where i
+	 * is greater or equal to and move all the other characters 1 unit to the right.
 	 */
 	void moveFromList(int i, List<Integer> list, List<Integer> b, int index) {
-		if(index < list.size()) {
-			if(i > list.get(index)) {
+		if (index < list.size()) {
+			if (i > list.get(index)) {
 				b.add(index, list.get(index));
 				moveFromList(i, list, b, index + 1);
 			}
-			if(i <= list.get(index)) {
+			if (i <= list.get(index)) {
 				b.add(index, i);
 				copyList(list, b, index, "start");
 			}
 		}
 	}
-	
+
 	void copyList(List<Integer> list, List<Integer> b, int index, String place) {
-		if(index < list.size()) {
-			if(place.equals("start")) {
+		if (index < list.size()) {
+			if (place.equals("start")) {
 				b.add(index + 1, list.get(index));
 				copyList(list, b, index + 1, "start");
 			}
-			if(place.equals("end")) {
+			if (place.equals("end")) {
 				b.add(index, list.get(index));
 				copyList(list, b, index + 1, "end");
 			}
 		}
 	}
-	
+
 	/**
-	 * Given two sorted arrays left and right, 
-	 * where left is sorted in a non-descending order and right is sorted in a ***non-ascending*** order,
-	 * return an array (of size left.length + right.length) sorted in a non-descending order, 
-	 * consisting of all elements of arrays left and right.
-	 * @param left an array sorted in a non-descending order
+	 * Given two sorted arrays left and right, where left is sorted in a
+	 * non-descending order and right is sorted in a ***non-ascending*** order,
+	 * return an array (of size left.length + right.length) sorted in a
+	 * non-descending order, consisting of all elements of arrays left and right.
+	 * 
+	 * @param left  an array sorted in a non-descending order
 	 * @param right an array sorted in a non-ascending order
-	 * @return a sorted array of size left.length + right.length, consisting of all elements of arrays left and right.
-	 * e.g., mergeSortedArraysV2({1, 3, 5, 7}, {8, 6, 4, 2}) returns a sorted array {1, 2, 3, 4, 5, 6, 7, 8}.
+	 * @return a sorted array of size left.length + right.length, consisting of all
+	 *         elements of arrays left and right. e.g., mergeSortedArraysV2({1, 3,
+	 *         5, 7}, {8, 6, 4, 2}) returns a sorted array {1, 2, 3, 4, 5, 6, 7, 8}.
 	 * 
-	 * <b>You are forbidden to use the mergeSortedListsV2 method below to solve this problem.</b>
+	 *         <b>You are forbidden to use the mergeSortedListsV2 method below to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public int[] mergeSortedArrays(int[] left, int[] right) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
 		 */
-		
+
 		// If both arrays are empty, return an empty array
-		if(left.length == 0 && right.length == 0) {
+		if (left.length == 0 && right.length == 0) {
 			return left;
 		}
-		// If one of the two arrays is empty, then return the other array in non-descending order.
-		else if(left.length == 0 || right.length == 0) {
-			if(left.length == 0) {
-			//	Arrays.sort(right);
+		// If one of the two arrays is empty, then return the other array in
+		// non-descending order.
+		else if (left.length == 0 || right.length == 0) {
+			if (left.length == 0) {
+				// Arrays.sort(right);
 				int[] rightSorted = new int[right.length];
 				sortRightArray(right, 0, rightSorted);
 				return rightSorted;
 			}
-			if(right.length == 0) {
+			if (right.length == 0) {
 				return left;
 			}
-		}
-		else {
+		} else {
 			/*
-			 * If there are elements in both arrays, make both into non descending order, 
+			 * If there are elements in both arrays, make both into non descending order,
 			 * and then sort element by element
 			 */
-			
+
 			int[] rightSorted = new int[right.length];
 			sortRightArray(right, 0, rightSorted);
-			
-			int[] finalArray = new int[left.length + right.length];			
-			
+
+			int[] finalArray = new int[left.length + right.length];
+
 			makeFinalArray(left, rightSorted, finalArray, 0, 0, 0);
-			
+
 			return finalArray;
 		}
-		
+
 		return null;
 	}
-	
-	void sortRightArray(int[] right, int index, int[] rightSorted) {		
+
+	void sortRightArray(int[] right, int index, int[] rightSorted) {
 		if (index < right.length) {
 			rightSorted[index] = right[right.length - 1 - index];
 			sortRightArray(right, index + 1, rightSorted);
 		}
 	}
-	
+
 	void makeFinalArray(int[] left, int[] rightSorted, int[] finalArray, int j, int k, int l) {
-		if (l < finalArray.length) {			
+		if (l < finalArray.length) {
 			// Do below until one of the arrays elements get transfered fully.
 			if (j < left.length && k != rightSorted.length) {
 				if (left[j] <= rightSorted[k]) {
@@ -540,76 +563,78 @@ public class RecursiveMethods {
 					l++;
 					makeFinalArray(left, rightSorted, finalArray, j, k, l);
 				}
-			}			
+			}
 		}
 	}
-	
+
 	/**
-	 * Given two sorted lists left and right, 
-	 * where left is sorted in a non-descending order and right is sorted in a ***non-ascending*** order,
-	 * return a list (of size left.length + right.length) sorted in a non-descending order, 
-	 * consisting of all elements of lists left and right.
-	 * @param left a list sorted in a non-descending order
+	 * Given two sorted lists left and right, where left is sorted in a
+	 * non-descending order and right is sorted in a ***non-ascending*** order,
+	 * return a list (of size left.length + right.length) sorted in a non-descending
+	 * order, consisting of all elements of lists left and right.
+	 * 
+	 * @param left  a list sorted in a non-descending order
 	 * @param right a list sorted in a non-ascending order
-	 * @return a sorted list of size left.size() + right.size(), consisting of all elements of lists left and right.
-	 * e.g., mergeSortedListsV2({1, 3, 5, 7}, {8, 6, 4, 2}) returns a sorted list {1, 2, 3, 4, 5, 6, 7, 8}.
+	 * @return a sorted list of size left.size() + right.size(), consisting of all
+	 *         elements of lists left and right. e.g., mergeSortedListsV2({1, 3, 5,
+	 *         7}, {8, 6, 4, 2}) returns a sorted list {1, 2, 3, 4, 5, 6, 7, 8}.
 	 * 
-	 * <b>You are forbidden to use the mergeSortedArraysV2 method above to solve this problem.</b>
+	 *         <b>You are forbidden to use the mergeSortedArraysV2 method above to
+	 *         solve this problem.</b>
 	 * 
-	 * Requirement:
-	 * You are required to implement all methods recursively.
-	 * You receive a zero if there is any occurrence of a loop (e.g., for, while).
+	 *         Requirement: You are required to implement all methods recursively.
+	 *         You receive a zero if there is any occurrence of a loop (e.g., for,
+	 *         while).
 	 */
 	public List<Integer> mergeSortedLists(List<Integer> left, List<Integer> right) {
 		/*
 		 * Your Task: Define a recursive method yourself and use it here.
 		 */
 		// If both lists are empty, return an empty list
-		if(left.size() == 0 && right.size() == 0) {
+		if (left.size() == 0 && right.size() == 0) {
 			List<Integer> finalList = new ArrayList<Integer>();
 			return finalList;
 		}
-		if(left.size() == 0 || right.size() == 0) {
-			if(left.size() == 0 && right.size() != 0) {
+		if (left.size() == 0 || right.size() == 0) {
+			if (left.size() == 0 && right.size() != 0) {
 				List<Integer> finalList = new ArrayList<Integer>();
 				sortRightList(right, 0, finalList);
 				return finalList;
 			}
-			if(left.size() != 0 && right.size() == 0) {
+			if (left.size() != 0 && right.size() == 0) {
 				return left;
 			}
 		}
 		/*
-		 * If both lists have entries in them, sort the right list in non-descending order,
-		 * and then sort element by element
+		 * If both lists have entries in them, sort the right list in non-descending
+		 * order, and then sort element by element
 		 */
 		else {
 			List<Integer> rightSorted = new ArrayList<Integer>();
 			sortRightList(right, 0, rightSorted);
-			
+
 			List<Integer> finalList = new ArrayList<Integer>();
-			
+
 			makeFinalList(left, rightSorted, finalList, 0, 0, 0);
-			
+
 			return finalList;
-			
+
 		}
-		
+
 		return null;
 	}
-	
+
 	void makeFinalList(List<Integer> left, List<Integer> rightSorted, List<Integer> finalList, int j, int k, int l) {
 		int outState = left.size() + rightSorted.size();
-		if(l < outState) {
+		if (l < outState) {
 			// Do below until one of the lists is fully copied into the finalList
-			if(j < left.size() && k != rightSorted.size()) {
-				if(left.get(j) <= rightSorted.get(k)) {
+			if (j < left.size() && k != rightSorted.size()) {
+				if (left.get(j) <= rightSorted.get(k)) {
 					finalList.add(l, left.get(j));
 					j++;
 					l++;
 					makeFinalList(left, rightSorted, finalList, j, k, l);
-				}
-				else {
+				} else {
 					finalList.add(l, rightSorted.get(k));
 					l++;
 					k++;
@@ -630,51 +655,26 @@ public class RecursiveMethods {
 //					makeFinalList(left, rightSorted, finalList, j, k, l);
 //				}
 //			}
-			else if(j == left.size() || k == rightSorted.size()) {
-				if(j == left.size() && k != rightSorted.size()) {
+			else if (j == left.size() || k == rightSorted.size()) {
+				if (j == left.size() && k != rightSorted.size()) {
 					finalList.add(l, rightSorted.get(k));
 					l++;
 					k++;
 					makeFinalList(left, rightSorted, finalList, j, k, l);
-				}
-				else if(k == rightSorted.size() && j != left.size()) {
+				} else if (k == rightSorted.size() && j != left.size()) {
 					finalList.add(l, left.get(j));
 					j++;
 					l++;
 					makeFinalList(left, rightSorted, finalList, j, k, l);
 				}
-			}			
+			}
 		}
 	}
-	
-	void sortRightList(List<Integer> right, int index, List<Integer> rightSorted) {		
+
+	void sortRightList(List<Integer> right, int index, List<Integer> rightSorted) {
 		if (index < right.size()) {
 			rightSorted.add(right.get(right.size() - 1 - index));
 			sortRightList(right, index + 1, rightSorted);
 		}
-	}
-	
-	public List<Integer> a2l(int[] a) {
-		List<Integer> list = new ArrayList<>();
-		for(int i = 0; i < a.length; i ++) {
-			list.add(a[i]);
-		}
-		return list;
-	}
-	
-	public static void main(String[] args) {
-		RecursiveMethods rm = new RecursiveMethods();
-		int[] L = {-3, -1, 1, 3, 5, 7};
-		int[] R = {10, 9, 8, 6, 4, 2};
-		List<Integer> left = rm.a2l(L);
-		List<Integer> right = rm.a2l(R);
-		List<Integer> rightSorted = new ArrayList<Integer>();
-		rm.sortRightList(right,  0, rightSorted);
-		
-		List<Integer> finalList = new ArrayList<Integer>();
-		rm.makeFinalList(left, rightSorted, finalList, 0, 0, 0);
-		System.out.println(finalList);
-
-		
 	}
 }
