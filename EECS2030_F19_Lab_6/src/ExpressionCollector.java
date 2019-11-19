@@ -1,4 +1,5 @@
-
+import java.util.List;
+import java.util.ArrayList;
 /*
  * Your Tasks:
  * 1. Read the problem description and inheritance hierarchy diagram in the instructions.
@@ -7,6 +8,9 @@
  */
 
 public class ExpressionCollector { 
+	
+	List<Integer> forInt = new ArrayList<Integer>();
+	List<Boolean> forBool = new ArrayList<Boolean>();
 
 	/*
 	 * Your Task:
@@ -26,6 +30,7 @@ public class ExpressionCollector {
 	 */
 	void addExpression(Expression e) { 
 		/* Your Task */
+		
 	}
 
 	/**

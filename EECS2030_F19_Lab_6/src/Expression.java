@@ -6,7 +6,10 @@
  * 3. Study tests in TestExpressions.java to understand what's required to help your implementation. 
  */
 
-public class Expression {
+public class Expression{
+	
+	public int left = 0;
+	public int right = 0;
 	
 	/**
 	 * Value of evaluation result.
@@ -20,7 +23,8 @@ public class Expression {
 	 * @param right right integer value
 	 */
 	Expression(int left, int right) { 
-		
+		this.left = left;
+		this.right = right;
 	}
 	
 	/**
@@ -29,7 +33,7 @@ public class Expression {
 	 */
 	Object getValue() {
 		/* Your Task */
-		return null;
+		return this.value;
 	}
 	
 	void evaluate() {

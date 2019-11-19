@@ -1,4 +1,4 @@
-/Expression.class
-/ExpressionCollector.class
-/TestExpressions.class
-/WrapperClassTester.class
+/ConjoinAll.class
+/AddAll.class
+/TimesAll.class
+/DisjoinAll.class
