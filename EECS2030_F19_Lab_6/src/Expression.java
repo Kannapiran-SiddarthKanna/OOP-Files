@@ -15,7 +15,7 @@ public class Expression{
 	 * Value of evaluation result.
 	 * Dynamically, value may be an Integer or a Boolean.
 	 */
-	Object value; 
+	public Object value; 
 	
 	/**
 	 * Initialize an expression.
